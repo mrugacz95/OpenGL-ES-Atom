@@ -43,7 +43,7 @@ public class OpenGLRenderer implements Renderer {
     public volatile float SwiatloX = 50f;
     public volatile float SwiatloY = 50f;
     public volatile float SwiatloZ = 50f;
-    AnimationData aniamtionData = null;
+    AnimationData aniamtionData = null; // pole klasy przechowywujące dane animacji, na początku nie wgralśmy zadnej animacj więc jest null
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height)                              //zmiany powierzchni, na przykład szerokości i wysokości okna,Dzięki niej możemy konfigurować kamerę oraz objętość widzenia.
@@ -81,26 +81,26 @@ public class OpenGLRenderer implements Renderer {
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, mat_posiBuf);
 
 
-        lastFrameTime = SystemClock.elapsedRealtime();
+        //lastFrameTime = SystemClock.elapsedRealtime(); //niepotrzebne
     }
 
     private float[] mRotationMatrix = new float[16];
 
-    private void drawSphere(float x, float y, float z, GL10 gl) {
+    private void drawSphere(float x, float y, float z, GL10 gl) { //narysowanie kuli w położeniu x,y,z
         gl.glPushMatrix();
         gl.glTranslatef(x, y, z);
         sphere.draw(gl);
         gl.glPopMatrix();
     }
 
-    private void drawSphere(Point3d point3d, GL10 gl) {
+    private void drawSphere(Point3d point3d, GL10 gl) { //narysowanie kuli w położeniu x,y,z zapisanym w klasie Point3d
         gl.glPushMatrix();
         gl.glTranslatef(point3d.x, point3d.y, point3d.z);
         sphere.draw(gl);
         gl.glPopMatrix();
     }
 
-    private void drawSphere(AnimationData.TimeStamp timeStamp, GL10 gl) {
+    private void drawSpheresFromAnimData(AnimationData.TimeStamp timeStamp, GL10 gl) { //narysowanie wszystkoch atomów z aktulanej klatki
         for(Point3d point3d : timeStamp.getPositions()){
             drawSphere(point3d,gl);
         }
@@ -168,7 +168,7 @@ public class OpenGLRenderer implements Renderer {
         this.aniamtionData = aniamtionData;
     }
     private void drawAnimationFrame(GL10 gl){
-        drawSphere(aniamtionData.getCurrentTimeStamp(),gl); //narysowanie obenej klatki z atomami
+        drawSpheresFromAnimData(aniamtionData.getCurrentTimeStamp(),gl); //narysowanie obenej klatki z atomami
     }
 
 }

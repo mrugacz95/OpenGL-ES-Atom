@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE); //pobranie klasy menadżera okana by wyciągnąć z niej szerkość ekranu
         Display display = wm.getDefaultDisplay();
         int width = display.getWidth();  // deprecated
         int height = display.getHeight();  // deprecated
@@ -62,21 +62,21 @@ public class MainActivity extends Activity {
         mRenderer.startAniamtion(fileLoader.getAnimationData());
     }
     // http://stackoverflow.com/questions/33162152/storage-permission-error-in-marshmallow
-    public  boolean isStoragePermissionGranted() {
+    public  boolean isStoragePermissionGranted() { //funkcja sprawdzająca czy aplikacja ma uprawnienia do odczytu z karty sd
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted");
+                Log.v(TAG,"Permission is granted"); //zapisanie w logu że nadano pozwolenie
                 return true;
             } else {
 
-                Log.v(TAG,"Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                Log.v(TAG,"Permission is revoked");//zapisanie w logu że nie nadano pozwolenia
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1); //poproszenie o pozwolenie i pokazanie okienka z pytaniem o pozwolnie
                 return false;
             }
         }
         else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted");
+            Log.v(TAG,"Permission is granted"); //zapisanie w logu że nadano pozwolenie
             return true;
         }
     }
@@ -85,7 +85,8 @@ public class MainActivity extends Activity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) { //funkcja która zostaje wywoływana po uzyskaniu odpowiedz dot permission/zezwoleń
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-            Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
+            Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]); //ponieważ okienko z zapytaniem o pozowlnie pokazuje się "na" oknie aplikacji to zostaja ona zatrzymana, dlatego gdy system zakończy pytanie użytkownika i uruchomi ponownie aplikaccję to musi ją poinformować o decyzji użytkowanika, dlatego zostaje przez system wywołana ta funkcja która zostaje następnie obsłużona przez aplikację
+            // w naszym przypadku gdy wszystko się uda wczytujemy plik z karty sd
             loadFileAndStartAnim();
         }
     }

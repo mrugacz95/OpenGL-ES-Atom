@@ -14,34 +14,31 @@ public class AnimationData { //klasa przetrzymująca dane dot animacji
 
     public int getTimeStampCount() {
         return timeStampCount;
-    }
+    }  //getter wynikający z enkapsulacji
 
 
-    public void addTimeStamp(TimeStamp timeStamp) {
+    public void addTimeStamp(TimeStamp timeStamp) { //dodanie jednej klatki
         timeStamps.add(timeStamp);
     }
-    public TimeStamp getCurrentTimeStamp() {
+    public TimeStamp getCurrentTimeStamp() { //getter do pobrania aktulnej klatki
         return timeStamps.get(currentTimeStamp);
     }
 
-    public void nextFrame() {
+    public void nextFrame() { //przejście do następnej klatki
         currentTimeStamp++;
         if(currentTimeStamp >= timeStamps.size())
             currentTimeStamp =0;
     }
 
-    public static class TimeStamp { //pjedyńcza klatka
+    public static class TimeStamp { //pojedyńcza klatka
         public List<Point3d> getPositions() {
             return positions;
         } //położenia atomów
 
-        private List<Point3d> positions = new ArrayList<>();
+        private List<Point3d> positions = new ArrayList<>();//lista z pozycjami w tej klatce
 
         public void addPosition(Point3d point3d){
             positions.add(point3d);
-        }
-        public void addPosition(String[] strPos){
-            positions.add(new Point3d(strPos));
         }
         public void addPosition(List<String> strPos){
             positions.add(new Point3d(strPos));

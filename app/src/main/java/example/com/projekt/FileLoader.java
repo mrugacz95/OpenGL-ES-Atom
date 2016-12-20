@@ -18,15 +18,16 @@ import java.util.List;
  */
 
 public class FileLoader {
-    AnimationData animationData = null;
+    AnimationData animationData = null; //pole klasy przetrzymujące wczytane dane animacji
+
     public FileLoader(final Context context) {
         //Find the directory for the SD Card using the API
-//*Don't* hardcode "/sdcard"
+        //*Don't* hardcode "/sdcard"
         File sdcard = Environment.getExternalStorageDirectory();
 
-//Get the text file
+        //Get the text file
         File file = new File(sdcard,"in.xyz"); //pobranie pliku z karty sd
-//Read text from file
+        //Read text from file
         AnimationData animationData = new AnimationData();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
